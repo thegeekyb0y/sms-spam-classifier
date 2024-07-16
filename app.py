@@ -5,10 +5,11 @@ from nltk.corpus import stopwords
 import nltk
 from nltk.stem.porter import PorterStemmer
 
+
+ps = PorterStemmer()
 nltk.download('stopwords')
 nltk.download('punkt')
 
-ps = PorterStemmer()
 
 # text preprocessing function
 def transform_text(text):
@@ -35,8 +36,9 @@ def transform_text(text):
 
     return " ".join(y)
 # importing both the pickle files that we used to train model and vectorizer as tfidf and naive bayes
-tfidf = pickle.load(open('vectorizer.pkl','rb'))
-model = pickle.load(open('model.pkl','rb'))
+
+tfidf = pickle.load(open('vectorizer1.pkl','rb'))
+mnb = pickle.load(open('model1.pkl','rb'))
 
 #title of the app
 st.title("Email/SMS Spam Classifier")
@@ -52,7 +54,7 @@ if st.button('Predict'):
     # vectorize the input
     vector_input = tfidf.transform([transformed_sms])
     # predict
-    result = model.predict(vector_input)[0]
+    result = mnb.predict(vector_input)[0]
     
     if result == 1:
         st.header("Spam")
